@@ -1,18 +1,19 @@
-class User
-  constructor: (@name, @piece) ->
+dice = require './dice'
+
+class Player
+  constructor: (@name) ->
     @position = 0
     @deeds = []
     @property = []
     @money = 1500
 
-  roll: (die = 2, size = 6) ->
-    score = 0
-    score += Math.floor Math.random() * size for dice in [0...die]
-    score
+  roll: ->
+    dice.roll()
 
   hasDeed: (street) ->
+    @deeds.filter((deed) -> deed.street is street).pop()
 
-  buy: (property) ->
+  buyProperty: (property) ->
     if @hasDeed property.street
       @money -= property.price
       @property.push property
@@ -22,4 +23,6 @@ class User
   pay: (user, amount) ->
     money = if amount > @money then @money else amount
     @money -= money
-    user.money = money
+    user.money += money
+
+module.exports = Player

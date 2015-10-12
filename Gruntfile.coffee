@@ -14,7 +14,9 @@ module.exports = (grunt) ->
         tagName: 'v<%= version %>'
         commitMessage: 'Prepared to release <%= version %>.'
     watch:
-      files: ['Gruntfile.coffee', 'test/**/*.coffee']
+      options:
+        atBegin: yes
+      files: ['src/**/*.coffee', 'test/**/*.coffee']
       tasks: ['test']
 
   grunt.event.on 'watch', (action, filepath, target) ->
