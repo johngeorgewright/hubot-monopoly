@@ -20,9 +20,10 @@ class Player
     else
       throw new Error 'Player doesn\'t own the deed for that street'
 
-  pay: (user, amount) ->
-    money = if amount > @money then @money else amount
-    @money -= money
-    user.money += money
+  pay: (amount, user) ->
+    if amount > @money
+      throw new Error "Player #{@name} doesn't have enough money"
+    @money -= amount
+    user.money += amount
 
 module.exports = Player

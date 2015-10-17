@@ -53,4 +53,18 @@ describe 'player', ->
       expect(@player.property[0]).to.eql street: 'mung', price: 10
 
     it 'will throw an error if the player doesn\'t have the deed', ->
-      expect(=> @player.buyProperty street: 'face').to.throw()
+      expect(=> @player.buyProperty street: 'face', price: 10).to.throw()
+
+  describe 'pay()', ->
+    beforeEach ->
+      @player2 = money: 0
+      @player.pay 10, @player2
+
+    it 'will take money from the player', ->
+      expect(@player.money).to.equal 1490
+
+    it 'will add money to the payee', ->
+      expect(@player2.money).to.equal 10
+
+    it 'will throw an execption if the user doesn\'t have enough money', ->
+      expect(=> @player.pay 1500, @player2).to.throw()
