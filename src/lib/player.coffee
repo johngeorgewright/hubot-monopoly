@@ -1,19 +1,27 @@
-class User
-  constructor: (@name, @piece) ->
+{EventEmitter} = require 'events'
+dice = require './dice'
+
+class Player
+  constructor: (@name) ->
     @position = 0
     @deeds = []
     @property = []
     @money = 1500
+    @emitter = new EventEmitter
 
-  roll: (die = 2, size = 6) ->
-    score = 0
-    score += Math.floor Math.random() * size for dice in [0...die]
-    score
+  roll: ->
+    dice.roll @emitter
 
   hasDeed: (street) ->
+    @deeds
+      .filter (deed) -> deed.street is street
+      .length > 0
+
+  canAfford: (price) ->
+    price <= @money
 
   buy: (property) ->
-    if @hasDeed property.street
+    if !@hasDeed(property.street) and @canAfford(property.price)
       @money -= property.price
       @property.push property
     else

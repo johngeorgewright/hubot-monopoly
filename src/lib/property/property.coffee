@@ -1,3 +1,4 @@
 class Property
-  constructor: (@street) ->
-    @user = null
+  constructor: (@street, @cost) ->
+
+module.exports = Property
