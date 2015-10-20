@@ -1,5 +1,5 @@
 class CardPack
-  constructor: (@cards) ->
+  constructor: (@cards = []) ->
 
   shuffle: ->
     counter = @cards.length
@@ -12,8 +12,12 @@ class CardPack
     @cards
 
   take: ->
-    card = @cards.pop()
-    card
+    @cards.pop()
 
-  put: (card) ->
-    @cards.unshift card
+  put: ->
+    @cards.unshift.apply @cards, arguments
+
+  size: ->
+    @cards.length
+
+module.exports = CardPack
