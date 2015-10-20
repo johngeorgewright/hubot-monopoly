@@ -1,13 +1,18 @@
+{EventEmitter} = require 'events'
+
 DIE_SIZE = 6
+EVENT_DOUBLE = 'rolled double'
+
+emitter = new EventEmitter
 
 roll = ->
-  Math.floor Math.random() * DIE_SIZE
+  Math.ceil Math.random() * DIE_SIZE
 
-emitEvents = (emitter, die1, die2) ->
-  emitter.emit 'rolled double', die1 if die1 is die2
-
-exports.roll = (emitter) ->
+exports.roll = (user) ->
   die1 = roll()
   die2 = roll()
-  emitEvents emitter, die1, die2 if emitter
+  emitter.emit EVENT_DOUBLE, user, die1 if die1 is die2
   die1 + die2
+
+exports.onDouble = (args...) -> emitter.on EVENT_DOUBLE, args...
+exports.onceDouble = (args...) -> emitter.once EVENT_DOUBLE, args...

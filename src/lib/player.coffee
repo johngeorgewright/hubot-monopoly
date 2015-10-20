@@ -1,4 +1,3 @@
-{EventEmitter} = require 'events'
 dice = require './dice'
 
 class Player
@@ -7,27 +6,24 @@ class Player
     @deeds = []
     @property = []
     @money = 1500
-    @emitter = new EventEmitter
 
   roll: ->
-    dice.roll @emitter
+    dice.roll()
 
   hasDeed: (street) ->
-    @deeds
-      .filter (deed) -> deed.street is street
-      .length > 0
+    @deeds.filter((deed) -> deed.street is street).pop()
 
-  canAfford: (price) ->
-    price <= @money
-
-  buy: (property) ->
-    if !@hasDeed(property.street) and @canAfford(property.price)
+  buyProperty: (property) ->
+    if @hasDeed property.street
       @money -= property.price
       @property.push property
     else
       throw new Error 'Player doesn\'t own the deed for that street'
 
-  pay: (user, amount) ->
-    money = if amount > @money then @money else amount
-    @money -= money
-    user.money = money
+  pay: (amount, user) ->
+    if amount > @money
+      throw new Error "Player #{@name} doesn't have enough money"
+    @money -= amount
+    user.money += amount
+
+module.exports = Player
