@@ -1,5 +1,4 @@
 CardPack = require '../../src/lib/card/pack'
-Card = require '../../src/lib/card/card'
 {expect} = require 'chai'
 
 describe 'CardPack', ->
