@@ -1,5 +1,7 @@
 # hubot-monopoly - UNDER DEVELOPMENT
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/johngeorgewright/hubot-monopoly.svg)](https://greenkeeper.io/)
+
 A hubot script that does the things
 
 See [`src/monopoly.coffee`](src/monopoly.coffee) for full documentation.
